@@ -1,5 +1,8 @@
+import os
 import requests
 import feedparser
+
+os.system('pkg install python && pkg install git && pip install requests')
 
 def arxiv_search(search_query):
     try:

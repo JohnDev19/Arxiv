@@ -1,20 +1,15 @@
-import os
-import requests
+import urllib.request
 import feedparser
-
-os.system('pkg install python && pkg install git && pip install requests')
 
 def arxiv_search(search_query):
     try:
         api_url = f'http://export.arxiv.org/api/query?search_query={search_query}&max_results=5'
-        response = requests.get(api_url)
+        response = urllib.request.urlopen(api_url)
+        content = response.read()
 
-        if response.status_code == 200:
-            feed = feedparser.parse(response.text)
-            entries = feed.entries
-            return entries
-        else:
-            return f"Error: {response.status_code} - {response.text}"
+        feed = feedparser.parse(content)
+        entries = feed.entries
+        return entries
 
     except Exception as e:
         return f"Error: {e}"
